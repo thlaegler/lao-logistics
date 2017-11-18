@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: @project.artifactId@
+#  cloud:
+#    config:
+#https://github.com/thlaegler/lao-logistics-config.git

@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.laegler.lao</groupId>
+	<artifactId>parent.libs</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>parent library</name>
+	<description>LAO - Library Parent</description>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+
+		<spring.version>4.3.10.RELEASE</spring.version>
+		<spring.boot.version>1.5.8.RELEASE</spring.boot.version>
+		<spring.cloud.version>Dalston.SR4</spring.cloud.version>
+		<spring.restdocs.version>1.2.2.RELEASE</spring.restdocs.version>
+		<springfox.version>2.7.0</springfox.version>
+		<hibernate.version>5.0.12.Final</hibernate.version>
+		<hibernate.jpa.version>1.0.0.Final</hibernate.jpa.version>
+		<lombok.version>1.16.18</lombok.version>
+		<swagger.version>1.5.16</swagger.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring.cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-hateoas</artifactId>
+				<version>${spring.boot.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate.javax.persistence</groupId>
+				<artifactId>hibernate-jpa-2.1-api</artifactId>
+				<version>${hibernate.jpa.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-java8</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+				<version>${springfox.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.restdocs</groupId>
+				<artifactId>spring-restdocs</artifactId>
+				<version>${spring.restdocs.version}</version>
+			</dependency>
+			<!-- <dependency> <groupId>io.swagger</groupId> <artifactId>swagger-annotations</artifactId> 
+				<version>${swagger.version}</version> </dependency> -->
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!-- Filter and copy resources -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+				</plugin>
+
+				<!-- Testing plugins -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.20</version>
+					<configuration>
+						<skipTests>true</skipTests>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>2.20</version>
+					<configuration>
+						<skip>true</skip>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>docu</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<!-- Documentation plugins -->
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-checkstyle-plugin</artifactId>
+							<version>2.17</version>
+							<executions>
+								<execution>
+									<phase>process-sources</phase>
+									<goals>
+										<goal>checkstyle</goal>
+									</goals>
+								</execution>
+							</executions>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-pmd-plugin</artifactId>
+							<version>3.7</version>
+							<executions>
+								<execution>
+									<phase>process-sources</phase>
+									<goals>
+										<goal>pmd</goal>
+									</goals>
+								</execution>
+							</executions>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-javadoc-plugin</artifactId>
+							<version>2.5</version>
+							<executions>
+								<execution>
+									<goals>
+										<goal>javadoc</goal>
+										<goal>test-javadoc</goal>
+									</goals>
+								</execution>
+							</executions>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-jxr-plugin</artifactId>
+							<version>2.5</version>
+							<executions>
+								<execution>
+									<goals>
+										<goal>jxr</goal>
+									</goals>
+								</execution>
+							</executions>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-project-info-reports-plugin</artifactId>
+							<version>2.9</version>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-changes-plugin</artifactId>
+							<version>2.12.1</version>
+							<executions>
+								<execution>
+									<id>include-announcement-file</id>
+									<phase>generate-resources</phase>
+									<goals>
+										<goal>announcement-generate</goal>
+									</goals>
+									<configuration>
+										<announcementFile>CHANGES.txt</announcementFile>
+										<announcementDirectory>${project.build.outputDirectory}/META-INF</announcementDirectory>
+									</configuration>
+								</execution>
+								<execution>
+									<id>generate-jira-report</id>
+									<phase>install</phase>
+									<goals>
+										<goal>jira-report</goal>
+									</goals>
+								</execution>
+							</executions>
+							<configuration>
+								<issueManagementSystems>
+									<issueManagementSystem>JIRA</issueManagementSystem>
+									<url>https://lao-logistics.atlassian.net/browse</url>
+								</issueManagementSystems>
+								<useJql>true</useJql>
+								<onlyCurrentVersion>true</onlyCurrentVersion>
+								<resolutionIds>Fixed,Done</resolutionIds>
+								<statusIds>Closed,Resolved,QA</statusIds>
+								<columnNames>Type,Key,Summary,Priority,Status,Resolution,Fix
+									Version,Assignee
+								</columnNames>
+								<webUser>jira-machine-user</webUser>
+								<webPassword>test</webPassword>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-changelog-plugin</artifactId>
+							<version>2.3</version>
+							<executions>
+								<execution>
+									<goals>
+										<goal>changelog</goal>
+									</goals>
+								</execution>
+							</executions>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-site-plugin</artifactId>
+							<version>3.6</version>
+							<executions>
+								<execution>
+									<goals>
+										<goal>site</goal>
+									</goals>
+								</execution>
+							</executions>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+
+			<reporting>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.5</version>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jxr-plugin</artifactId>
+						<version>2.5</version>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-changes-plugin</artifactId>
+						<version>2.12.1</version>
+						<configuration>
+							<useJql>true</useJql>
+							<fixVersionIds>13722,12515</fixVersionIds>
+							<onlyCurrentVersion>true</onlyCurrentVersion>
+							<columnNames>Type,Key,Summary,Assignee,Status,Resolution,Fix
+								Version
+							</columnNames>
+							<sortColumnNames>Type,Key DESC</sortColumnNames>
+							<statusIds>Resolved, Closed</statusIds>
+							<typeIds>Bug, New Feature, Improvement, Wish</typeIds>
+							<filter>resolution=1&amp;sorter/field=issuetype&amp;sorter/order=ASC</filter>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-changelog-plugin</artifactId>
+						<version>2.3</version>
+						<reportSets>
+							<reportSet>
+								<id>dual-report</id>
+								<configuration>
+									<type>range</type>
+									<range>30</range>
+								</configuration>
+								<reports>
+									<report>changelog</report>
+									<report>file-activity</report>
+								</reports>
+							</reportSet>
+						</reportSets>
+					</plugin>
+				</plugins>
+			</reporting>
+		</profile>
+	</profiles>
+
+	<organization>
+		<name>Lao Logistics</name>
+		<url>http://www.lao-logistics.com</url>
+	</organization>
+	<inceptionYear>2017</inceptionYear>
+	<developers>
+		<developer>
+			<id>thomas</id>
+			<organization>Lao Logistics</organization>
+			<organizationUrl>http://www.lao-logistics.com</organizationUrl>
+			<email>thomas@lao-logistics.com</email>
+		</developer>
+	</developers>
+	<issueManagement>
+		<system>JIRA</system>
+		<url>https://lao-logistics.atlassian.net/browse</url>
+	</issueManagement>
+	<scm>
+		<url>https://bitbucket.org/tlaegler/lao-logistics</url>
+		<connection>scm:git:git://bitbucket.org/tlaegler/lao-logistics</connection>
+		<developerConnection>scm:git:git@bitbucket.org:tlaegler/lao-logistics.git</developerConnection>
+	</scm>
+
+	<!-- <repositories> <repository> <id>lao-logistics-maven-repository</id> 
+		<name>lao-logistics-maven-repository</name> <url>gs://lao-logistics-maven-repository</url> 
+		</repository> </repositories> -->
+
+</project>

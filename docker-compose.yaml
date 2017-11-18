@@ -1,0 +1,102 @@
+version: '3'
+services:
+  service.orders:
+#    build: service.orders/.
+    image: gcr.io/lao-logistics/service.orders:0.0.1-SNAPSHOT
+    container_name: service.orders
+    hostname: service.orders
+#working_dir: /
+#command: java -Dorg.service.orders.basePath=http://daemon.users:8091 -jar app.jar
+    ports:
+    - 8091:8091
+    environment:
+    - SPRING_CLOUD_CONFIG_URI="http://daemon.config:8888"
+    - SPRING_CLOUD_CONFIG_LABEL="master"
+    - SPRING_PROFILES_ACTIVE="local"
+    - ORG_EXAMPLE_USERS_PORT_GRPC="7091"
+    - ORG_EXAMPLE_USERS_PORT_REST="8091"
+    - ORG_EXAMPLE_USERS_PORT_SOAP="9091"
+    links:
+    - daemon.config
+    - daemon.mysql
+#    - daemon.redis
+    - daemon.elasticsearch
+    networks:
+    - ll-network
+  daemon.zuul:
+    image: gcr.io/lao-logistics/daemon.zuul:0.0.1-SNAPSHOT
+    container_name: daemon.zuul
+    hostname: daemon.zuul
+    ports:
+    - 8080:8080
+    environment:
+    - SPRING_CLOUD_CONFIG_URI="http://daemon.config:8888"
+    - SPRING_CLOUD_CONFIG_LABEL="master"
+    - SPRING_PROFILES_ACTIVE="local"
+    - ORG_EXAMPLE_GATEWAY_PORT="8080"
+    links:
+    - daemon.config
+    networks:
+    - ll-network
+  daemon.oauth2:
+    image: gcr.io/lao-logistics/daemon.oauth2:0.0.1-SNAPSHOT
+    container_name: daemon.oauth2
+    hostname: daemon.oauth2
+    ports:
+    - 8081:8081
+    environment:
+    - SPRING_CLOUD_CONFIG_URI="http://daemon.config:8888"
+    - SPRING_CLOUD_CONFIG_LABEL="master"
+    - ORG_EXAMPLE_OAUTH2_PORT="8081"
+    links:
+    - daemon.config
+    networks:
+    - ll-network
+  daemon.config:
+    image: gcr.io/lao-logistics/daemon.config:0.0.1-SNAPSHOT
+    container_name: daemon.config
+    hostname: daemon.config
+    ports:
+    - 8888:8888
+    environment:
+    - SPRING_CLOUD_CONFIG_SERVER_GIT_URI="https://tlaegler@bitbucket.org/tlaegler/lao-logistics-config.git"
+    - SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME="test"
+    - SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD="test"
+    networks:
+    - ll-network
+  daemon.mysql:
+    image: gcr.io/lao-logistics/daemon.mysql:0.0.1-SNAPSHOT
+    container_name: daemon.mysql
+    hostname: daemon.mysql
+    ports:
+    - 3306:3306
+    networks:
+    - ll-network
+#  daemon.redis:
+#    image: gcr.io/lao-logistics/daemon.redis:0.0.1-SNAPSHOT
+#    container_name: daemon.redis
+#    hostname: daemon.redis
+#    ports:
+#    - 6379:6379
+#    networks:
+#    - ll-network
+  daemon.elasticsearch:
+    image: gcr.io/lao-logistics/daemon.elasticsearch:0.0.1-SNAPSHOT
+    container_name: daemon.elasticsearch
+    hostname: daemon.elasticsearch
+    ports:
+    - 9200:9200
+    - 9300:9300
+    environment:
+    - cluster.name=example-cluster
+    - bootstrap.memory_lock=true
+    - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+    - esdata:/usr/share/elasticsearch/data
+    networks:
+    - ll-network
+volumes:
+  esdata:
+    driver: local
+networks:
+  ll-network: null

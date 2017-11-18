@@ -1,0 +1,11 @@
+FROM minideb
+
+ARG SPRING_CLOUD_CONFIG_GIT_LABEL
+
+ENV SPRING_CLOUD_CONFIG_GIT_LABEL ${SPRING_CLOUD_CONFIG_GIT_LABEL}
+
+EXPOSE 8080
+
+ADD target/service.user.jar /app.jar
+
+ENTRYPOINT ["java", "-jar", "/app.jar"]

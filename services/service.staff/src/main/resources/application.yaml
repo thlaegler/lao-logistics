@@ -1,0 +1,75 @@
+server:
+  port: 8080
+logging:
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+  level:
+    com.laegler: TRACE
+    org.springframework.data: WARN
+    org.springframework.security: DEBUG
+    org.springframework.cloud: DEBUG
+    org.springframework.web: WARN
+    org.hibernate: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+security:
+  sessions: if-required
+  oauth2:
+    client:
+      clientId: test
+      clientSecret: test
+      access-token-validity-seconds: 30
+      accessTokenUri: http://localhost:8801/oauth/token
+      userAuthorizationUri: http://localhost:8801/oauth/authorize
+      authorized-grant-types: authorization_code,refresh_token,password,implicit,client_credentials
+      scope: guest,user,customer,employee,admin,read,write
+#      tokenName: oauth_token
+#      authenticationScheme: query
+#      clientAuthenticationScheme: form
+    resource:
+      userInfoUri: https://localhost:8801/oauth/dialog
+      preferTokenInfo: false  
+      token-info-uri: https://localhost:8801/oauth/check_token
+google:
+  apikey: AIzaSyBaUzDHrtg3_5whU23Fz_azUpvcR_ZDEUs
+spring:
+  datasource:
+# Localhost - Postgres
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5432/lao?createDatabaseIfNotExist=true
+# CloudSQL - Postgres
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://google/cloudSqlInstance=ll:australia-southeast1:lao&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false&zeroDateTimeBehavior=convertToNull
+# Localhost - MySQL
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/lao?zeroDateTimeBehavior=convertToNull&autoreconnect=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useSSL=false
+# CloudSQL - MySQL
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://google/cloudSqlInstance=lao:australia-southeast1:lao&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false&zeroDateTimeBehavior=convertToNull
+# H2
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:lao;MODE=MySQL;IGNORECASE=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: lao
+    password: lao
+  jpa:
+    database: mysql
+#    database: postgresql
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+      naming:
+        strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+      javax:
+        persistence:
+          schema-generation:
+            create-source: metadata
+            drop-source: metadata
+            scripts:
+              action: drop-and-create
+              create-target: src/main/resources/create-schema.sql
+              drop-target: src/main/resources/drop-schema.sql
