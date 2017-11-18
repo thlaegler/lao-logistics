@@ -1,0 +1,32 @@
+server:
+  port: 8801
+security:
+  ignored: /**
+  basic:
+    enabled: false
+  enable-csrf: false
+spring:
+  security:
+    enabled: false
+management:
+  security:
+    enabled: false
+#security:
+#  sessions: if-required
+#  oauth2:
+#    client:
+#      clientId: test1.staging.xmsymphony.com
+#      clientSecret: test
+#      access-token-validity-seconds: 30
+#      accessTokenUri: http://${daemon.oauth2.host}:${daemon.oauth2.rest.port}/oauth/token
+#      userAuthorizationUri: http://${daemon.oauth2.host}:${daemon.oauth2.rest.port}/oauth/authorize
+#      authorized-grant-types: client_credentials
+##      authorized-grant-types: authorization_code,refresh_token,password,implicit,client_credentials
+##      scope: guest,user,admin,read,write
+##      tokenName: oauth_token
+##      authenticationScheme: query
+##      clientAuthenticationScheme: form
+#    resource:
+#      userInfoUri: https://${daemon.oauth2.host}:${daemon.oauth2.rest.port}/oauth/dialog
+#      preferTokenInfo: false  
+##      token-info-uri: https://${daemon.oauth2.host}:${daemon.oauth2.rest.port}/oauth/user
