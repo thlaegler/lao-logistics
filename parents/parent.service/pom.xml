@@ -50,9 +50,9 @@
 
 		<!-- Swagger -->
 		<codegen.skip>false</codegen.skip>
-		<api.domain>domain</api.domain>
-		<api.package>${project.groupId}.service</api.package>
-		<api.basebath>/</api.basebath>
+		<api.domain>no_be_set_in_submodule</api.domain>
+		<api.package>${project.groupId}.service.no_be_set_in_submodule</api.package>
+		<api.basebath>/no_be_set_in_submodule</api.basebath>
 
 		<jvm.args></jvm.args>
 	</properties>

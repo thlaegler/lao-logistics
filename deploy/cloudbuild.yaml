@@ -1,0 +1,48 @@
+steps:
+
+# gcloud: prepare
+- name: 'gcr.io/$PROJECT_ID/web-builder:1.0'
+  id: 'prepare'
+  entrypoint: '/bin/bash'
+  args:
+  - '-c'
+  - |
+    source deploy.sh
+    lao_init
+
+# git: clone repos into workspace
+- name: 'gcr.io/cloud-builders/kubectl'
+  id: 'kubectl-undeploy'
+  waitFor: ['prepare']
+  entrypoint: '/bin/bash'
+  args:
+  - '-c'
+  - |
+    source deploy.sh
+    undeploy_current
+
+# helm/kubectl: cluster deployment
+- name: 'gcr.io/$PROJECT_ID/helm-builder:1.0'
+  id: 'helm-deploy'
+  waitFor: ['kubectl-undeploy']
+  entrypoint: '/bin/bash'
+  args:
+  - '-c'
+  - |
+    source deploy.sh
+    lao_deploy
+
+# gcloud: post deployment process
+- name: 'gcr.io/$PROJECT_ID/web-builder:1.0'
+  id: 'post-deployment-process'
+  waitFor: ['helm-deploy']
+  entrypoint: '/bin/bash'
+  args:
+  - '-c'
+  - |
+    source deploy.sh
+    deploy_post_process
+
+# Check deployment (with helm test?)
+
+timeout: 1200s
