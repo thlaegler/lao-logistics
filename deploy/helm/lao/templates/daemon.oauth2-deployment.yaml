@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: daemon.oauth2
+  labels:
+    app: daemon.oauth2
+    provider: lao
+    group: com.laegler.lao
+    project: daemon.oauth2
+    version: {{ .Values.lao.version }}
+spec:
+  replicas: 1
+  revisionHistoryLimit: {{ .Values.upgrade.revisionHistoryLimit }}
+  minReadySeconds: {{ .Values.upgrade.minReadySeconds }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: {{ .Values.upgrade.maxUnavailable }}
+  template:
+    metadata:
+      labels:
+        app: daemon.oauth2
+    spec:
+      containers:
+      - name: daemon.oauth2
+        image: {{ .Values.lao.registry }}/daemon.oauth2:{{ .Values.lao.version }}
+        imagePullPolicy: Always
+        env:
+        - name: SPRING_CLOUD_CONFIG_GIT_LABEL
+          value: {{ .Values.spring.cloud.config.git.label }}
+        ports:
+        - name: api
+          containerPort: 8080
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30

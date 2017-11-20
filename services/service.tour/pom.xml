@@ -6,8 +6,8 @@
 	<artifactId>service.tour</artifactId>
 	<packaging>jar</packaging>
 
-	<name>tour service</name>
-	<description>LAO - Tour Service</description>
+	<name>LAO Service - Tour</name>
+	<description>LAO - Tour Planing Service</description>
 
 	<parent>
 		<groupId>com.laegler.lao</groupId>
@@ -17,10 +17,15 @@
 	</parent>
 
 	<properties>
+		<api.port>8814</api.port>
 		<api.domain>tour</api.domain>
 		<api.package>${project.groupId}.service.tour</api.package>
 		<api.basebath>/tour</api.basebath>
-		<jvm.args>-Dspring.profiles.active=default -Dserver.port=8814</jvm.args>
+
+		<jvm.args>-Dspring.profiles.active=default
+			-Dspring.cloud.config.git.uri=${spring.cloud.config.uri}
+			-Dspring.cloud.config.git.label=${spring.cloud.config.git.label}
+			-Dserver.port=${api.port}</jvm.args>
 	</properties>
 
 	<dependencies>

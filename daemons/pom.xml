@@ -8,13 +8,20 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>daemons</name>
-	<description>Demo project for Spring Boot</description>
+	<name>LAO Daemons</name>
+	<description>LAO - Aggregator Project for Daemons</description>
 
 	<modules>
+		<!-- Standalone daemons -->
 		<module>daemon.mysql</module>
 		<module>daemon.elasticsearch</module>
 		<module>daemon.redis</module>
+		<module>daemon.activiti</module>
+		<module>daemon.camunda</module>
+		<module>daemon.kafka</module>
+		<module>daemon.zookeeper</module>
+		
+		<!-- Spring daemons -->
 		<module>daemon.config</module>
 		<module>daemon.oauth2</module>
 		<module>daemon.zuul</module>

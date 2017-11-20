@@ -73,3 +73,6 @@ spring:
               action: drop-and-create
               create-target: src/main/resources/create-schema.sql
               drop-target: src/main/resources/drop-schema.sql
+  messages:
+    basename: messages/messages
+    encoding: UTF-8

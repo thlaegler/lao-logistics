@@ -7,6 +7,8 @@ import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.GenerationType.AUTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +24,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
 
+@ApiModel
 @Data
 @Builder
 @NoArgsConstructor
@@ -34,12 +37,13 @@ public class Facility extends ResourceSupport implements Serializable {
 
 	private static final long serialVersionUID = -5045884797185277420L;
 
+	@ApiModelProperty(example = "123", readOnly = true)
 	@Id
 	@GeneratedValue(strategy = AUTO)
 	private long facilityId;
 
 	@Column
-	private String volume;
+	private String dimensions;
 
 	@OneToOne(cascade = ALL)
 	private Address address;

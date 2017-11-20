@@ -1,15 +1,14 @@
 package com.laegler.lao.service.uac.repo;
 
+import com.laegler.lao.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import com.laegler.lao.model.entity.User;
 
 @Repository
 public interface UserJpaRepository extends JpaRepository<User, Long> {
 
-	User findByUsername(final String username);
+	User findFirstByUsername(final String username);
 
-	User findByEmail(final String email);
+	User findFirstByEmail(final String email);
 
 }

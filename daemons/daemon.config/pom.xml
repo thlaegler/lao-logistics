@@ -6,8 +6,8 @@
 	<artifactId>daemon.config</artifactId>
 	<packaging>jar</packaging>
 
-	<name>cloud config server daemon</name>
-	<description>LAO - Cloud Config Server Daemon</description>
+	<name>LAO Daemon - Config</name>
+	<description>LAO - Cloud Config Daemon</description>
 
 	<parent>
 		<groupId>com.laegler.lao</groupId>

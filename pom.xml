@@ -8,8 +8,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>lao-logistics</name>
-	<description>Lao Logistics</description>
+	<name>LAO</name>
+	<description>LAO Logistics</description>
 
 	<modules>
 		<module>parents</module>

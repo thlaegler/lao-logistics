@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: daemon.oauth2
+  labels:
+    app: daemon.oauth2
+    provider: lao
+    group: com.laegler.lao
+    project: daemon.oauth2
+    version: {{ .Values.lao.version }}
+spec:
+  selector:
+    app: daemon.oauth2
+  ports:
+  - name: api
+    port: 8080

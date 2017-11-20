@@ -6,7 +6,7 @@
 	<artifactId>service.shipment</artifactId>
 	<packaging>jar</packaging>
 
-	<name>shipment service</name>
+	<name>LAO Service - Shipment</name>
 	<description>LAO Shipment Service</description>
 
 	<parent>
@@ -17,10 +17,15 @@
 	</parent>
 
 	<properties>
+		<api.port>8812</api.port>
 		<api.domain>shipment</api.domain>
 		<api.package>${project.groupId}.service.shipment</api.package>
 		<api.basebath>/shipment</api.basebath>
-		<jvm.args>-Dspring.profiles.active=default -Dserver.port=8812</jvm.args>
+
+		<jvm.args>-Dspring.profiles.active=default
+			-Dspring.cloud.config.git.uri=${spring.cloud.config.uri}
+			-Dspring.cloud.config.git.label=${spring.cloud.config.git.label}
+			-Dserver.port=${api.port}</jvm.args>
 	</properties>
 
 	<dependencies>

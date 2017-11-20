@@ -6,7 +6,7 @@
 	<artifactId>daemon.oauth2</artifactId>
 	<packaging>jar</packaging>
 
-	<name>oauth2 server daemon</name>
+	<name>LAO Daemon - OAuth2</name>
 	<description>LAO - OAuth2 Server Daemon</description>
 
 	<parent>
@@ -15,6 +15,14 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../parents/parent.service</relativePath>
 	</parent>
+
+	<properties>
+		<api.port>8801</api.port>
+		<api.domain>oauth2</api.domain>
+		<api.package>${project.groupId}.service.oauth2</api.package>
+		<api.basebath>/tour</api.basebath>
+		<jvm.args>-Dspring.profiles.active=default -Dserver.port=${api.port}</jvm.args>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -32,6 +40,10 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

@@ -6,7 +6,7 @@
 	<artifactId>service.uac</artifactId>
 	<packaging>jar</packaging>
 
-	<name>uac service</name>
+	<name>LAO Service - UAC</name>
 	<description>LAO - User and Account Service</description>
 
 	<parent>
@@ -17,11 +17,15 @@
 	</parent>
 
 	<properties>
+		<api.port>8811</api.port>
 		<api.domain>uac</api.domain>
 		<api.package>${project.groupId}.service.uac</api.package>
 		<api.basebath>/uac</api.basebath>
 
-		<jvm.args>-Dspring.profiles.active=default -Dserver.port=8811</jvm.args>
+		<jvm.args>-Dspring.profiles.active=default
+			-Dspring.cloud.config.git.uri=${spring.cloud.config.uri}
+			-Dspring.cloud.config.git.label=${spring.cloud.config.git.label}
+			-Dserver.port=${api.port}</jvm.args>
 	</properties>
 
 	<dependencies>

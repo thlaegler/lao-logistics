@@ -6,7 +6,7 @@
 	<artifactId>service.staff</artifactId>
 	<packaging>jar</packaging>
 
-	<name>staff service</name>
+	<name>LAO Service - Staff</name>
 	<description>LAO - Staff Service</description>
 
 	<parent>
@@ -20,7 +20,11 @@
 		<api.domain>staff</api.domain>
 		<api.package>${project.groupId}.service.staff</api.package>
 		<api.basebath>/staff</api.basebath>
-		<jvm.args>-Dspring.profiles.active=default -Dserver.port=8815</jvm.args>
+
+		<jvm.args>-Dspring.profiles.active=default
+			-Dspring.cloud.config.git.uri=${spring.cloud.config.uri}
+			-Dspring.cloud.config.git.label=${spring.cloud.config.git.label}
+			-Dserver.port=${api.port}</jvm.args>
 	</properties>
 
 	<dependencies>

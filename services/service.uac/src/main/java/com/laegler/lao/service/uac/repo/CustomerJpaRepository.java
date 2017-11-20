@@ -1,15 +1,14 @@
 package com.laegler.lao.service.uac.repo;
 
+import com.laegler.lao.model.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import com.laegler.lao.model.entity.Customer;
 
 @Repository
 public interface CustomerJpaRepository extends JpaRepository<Customer, Long> {
 
-	Customer findByUsername(final String username);
+	Customer findFirstByLastName(final String lastname);
 
-	Customer findByEmail(final String email);
+	Customer findFirstByEmail(final String email);
 
 }

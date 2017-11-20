@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: daemon.config
+  labels:
+    app: daemon.config
+    provider: lao
+    group: com.laegler.lao
+    project: daemon.config
+    version: {{ .Values.lao.version }}
+spec:
+  selector:
+    app: daemon.config
+  ports:
+  - name: api
+    port: 8888

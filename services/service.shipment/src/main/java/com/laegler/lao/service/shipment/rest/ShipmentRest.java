@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.hateoas.Resources;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import java.net.URI;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.UUID;
@@ -41,36 +43,38 @@ public class ShipmentRest {
 
 	@PostMapping(consumes = APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Add a new Shipment", response = Shipment.class)
-	public ResponseEntity<?> addShipment(@RequestBody @ApiParam(value = "Shipment") final Shipment shipment) throws URISyntaxException {
+	public ResponseEntity<?> addShipment(@Valid @RequestBody @ApiParam(value = "Shipment") final Shipment shipment)
+			throws URISyntaxException {
 		LOG.trace("addShipment({})", shipment);
 
-		Shipment shipmentResponse = shipmentService.addShipment(shipment);
-		shipmentResponse.add(linkTo(methodOn(ShipmentRest.class).getShipmentByShipmentId(shipment.getShipmentId())).withSelfRel());
-		shipmentResponse.add(linkTo(methodOn(ShipmentRest.class).getAllShipments(0, 20)).withRel("list"));
+		Shipment s = shipmentService.addShipment(shipment);
+		s.add(getSelfLink(s.getShipmentId()).withSelfRel());
+		s.add(getListLink().withRel("list"));
 
-		return ResponseEntity.created(new URI("")).body(shipmentResponse);
+		return ResponseEntity.created(getSelfLink(s.getShipmentId()).toUri()).body(s);
 	}
 
 	@PutMapping(value = "/shipmentId/{shipmentId:.+}", consumes = APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Update a Shipment by Shipment ID", response = Shipment.class)
 	public ResponseEntity<?> updateShipment(
-			@PathVariable(name = "shipmentId") @ApiParam(value = "Shipment ID", example = "1") final long shipmentId,
-			@RequestBody @ApiParam(value = "Shipment") final Shipment shipment) throws URISyntaxException {
+			@NotNull @PathVariable(name = "shipmentId") @ApiParam(name = "shipmentId", value = "Shipment ID",
+					example = "1") final long shipmentId,
+			@Valid @RequestBody @ApiParam(value = "Shipment") final Shipment shipment) throws URISyntaxException {
 		LOG.trace("updateShipment({})", shipment);
 
 		shipment.setShipmentId(shipmentId);
 
-		Shipment shipmentResponse = shipmentService.updateShipment(shipment);
-		shipmentResponse.add(linkTo(methodOn(ShipmentRest.class).getShipmentByShipmentId(shipmentResponse.getShipmentId())).withSelfRel());
-		shipmentResponse.add(linkTo(methodOn(ShipmentRest.class).getAllShipments(0, 20)).withRel("list"));
+		Shipment s = shipmentService.updateShipment(shipment);
+		s.add(getSelfLink(s.getShipmentId()).withSelfRel());
+		s.add(getListLink().withRel("list"));
 
-		return ResponseEntity.ok(shipmentResponse);
+		return ResponseEntity.ok(s);
 	}
 
 	@DeleteMapping(value = "/shipmentId/{shipmentId:.+}")
 	@ApiOperation(value = "Delete a Shipment by Shipment ID")
-	public ResponseEntity<?> deleteShipment(
-			@PathVariable(name = "shipmentId") @ApiParam(value = "Shipment ID", example = "1") final long shipmentId) {
+	public ResponseEntity<?> deleteShipment(@NotNull @PathVariable(name = "shipmentId") @ApiParam(name = "shipmentId", value = "Shipment ID",
+			example = "1") final long shipmentId) {
 		LOG.trace("deleteShipment({})", shipmentId);
 
 		shipmentService.deleteShipment(shipmentId);
@@ -78,49 +82,50 @@ public class ShipmentRest {
 		return ResponseEntity.noContent().build();
 	}
 
-	@GetMapping("/trackingUuid/{trackingUuid:.+}")
-	@ApiOperation(value = "Get a Shipment by Tracking UUID", response = Shipment.class, responseContainer = "Page")
-	public ResponseEntity<?> getShipmentByTrackingUuid(@PathVariable(value = "Tracking UUID") final UUID trackingUuid) {
-		LOG.trace("getShipmentByTrackingUuid({})", trackingUuid);
+	@GetMapping("/trackingNumber/{trackingNumber:.+}")
+	@ApiOperation(value = "Get a Shipment by Tracking UUID", response = Shipment.class)
+	public ResponseEntity<?> getShipmentByTrackingNumber(@NotNull @PathVariable(value = "Tracking UUID") @ApiParam(name = "trackingNumber",
+			value = "Tracking UUID", example = "1234-3xr434-2sr43s-2r3s") final UUID trackingNumber) {
+		LOG.trace("getShipmentByTrackingNumber({})", trackingNumber);
 
-		Shipment shipment = shipmentService.getShipmentByTrackingUuid(trackingUuid);
+		Shipment s = shipmentService.getShipmentByTrackingNumber(trackingNumber);
 
-		shipment.add(linkTo(methodOn(ShipmentRest.class).getShipmentByShipmentId(shipment.getShipmentId())).withSelfRel());
-		shipment.add(linkTo(methodOn(ShipmentRest.class).getShipmentsByCustomerId(1)).withRel("list"));
+		s.add(getSelfLink(s.getShipmentId()).withSelfRel());
+		s.add(getListLink().withRel("list"));
 
-		return ResponseEntity.ok().build();
-		// shipmentService.getShipmentByTrackingUuid(trackingUuid));
+		return ResponseEntity.ok(s);
+		// shipmentService.getShipmentByTrackingNumber(trackingNumber));
 	}
 
 	@GetMapping("/customerId/{customerId:.+}")
-	@ApiOperation(value = "Get a Shipment by Customer ID", response = Shipment.class, responseContainer = "Page")
-	public ResponseEntity<?> getShipmentsByCustomerId(@PathVariable(value = "Customer ID") final long customerId) {
+	@ApiOperation(value = "Get a Shipment by Customer ID", response = Shipment.class, responseContainer = "List")
+	public ResponseEntity<?> getShipmentsByCustomerId(@NotNull @PathVariable(value = "customerId") @ApiParam(name = "customerId",
+			value = "Customer ID", example = "1") final long customerId) {
 		LOG.trace("getShipmentsByCustomerId({})", customerId);
 
 		List<Shipment> shipments = shipmentService.getShipmentsByCustomerId(customerId);
 
 		shipments.forEach(s -> {
-			s.add(linkTo(methodOn(ShipmentRest.class).getShipmentByShipmentId(s.getShipmentId())).withSelfRel());
+			s.add(getSelfLink(s.getShipmentId()).withSelfRel());
 		});
 
-		Resources<Shipment> responseResources =
-				new Resources<>(shipments, linkTo(methodOn(ShipmentRest.class).getShipmentsByCustomerId(customerId)).withRel("list"));
+		Resources<Shipment> responseResources = new Resources<>(shipments, getListLink().withRel("list"));
 
 		return ResponseEntity.ok(responseResources);
 	}
 
 	@GetMapping("/shipmentId/{shipmentId:.+}")
 	@ApiOperation(value = "Get a Shipment by Shipment ID", response = Shipment.class)
-	public ResponseEntity<?> getShipmentByShipmentId(
-			@PathVariable(name = "shipmentId") @ApiParam(value = "Shipment ID", example = "1") final long shipmentId) {
+	public ResponseEntity<?> getShipmentByShipmentId(@NotNull @PathVariable(name = "shipmentId") @ApiParam(name = "shipmentId",
+			value = "Shipment ID", example = "1") final long shipmentId) {
 		LOG.trace("getShipmentByShipmentId({})", shipmentId);
 
-		Shipment shipment = shipmentService.getShipmentByShipmentId(shipmentId);
+		Shipment s = shipmentService.getShipmentByShipmentId(shipmentId);
 
-		shipment.add(linkTo(methodOn(ShipmentRest.class).getShipmentByShipmentId(shipment.getShipmentId())).withSelfRel());
-		shipment.add(linkTo(methodOn(ShipmentRest.class).getAllShipments(0, 20)).withRel("list"));
+		s.add(getSelfLink(s.getShipmentId()).withSelfRel());
+		s.add(getListLink().withRel("list"));
 
-		return ResponseEntity.ok(shipment);
+		return ResponseEntity.ok(s);
 	}
 
 	@GetMapping
@@ -139,6 +144,14 @@ public class ShipmentRest {
 		// linkTo(methodOn(ShipmentRest.class).getAllShipments(page, size)).withRel("list"));
 
 		return ResponseEntity.ok(shipments.getContent());
+	}
+
+	private ControllerLinkBuilder getSelfLink(final long shipmentId) {
+		return linkTo(methodOn(ShipmentRest.class).getShipmentByShipmentId(shipmentId));
+	}
+
+	private ControllerLinkBuilder getListLink() {
+		return linkTo(methodOn(ShipmentRest.class).getAllShipments(0, 20));
 	}
 
 }

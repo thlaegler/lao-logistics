@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: daemon.zuul
+  labels:
+    app: daemon.zuul
+    provider: lao
+    group: com.laegler.lao
+    project: daemon.oauth2
+    version: {{ .Values.lao.version }}
+spec:
+  # backend:
+  #   serviceName: daemon.zuul
+  #   servicePort: 8080
+  rules:
+    http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: daemon.zuul
+          servicePort: 8080

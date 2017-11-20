@@ -6,7 +6,7 @@
 	<artifactId>daemon.mysql</artifactId>
 	<packaging>pom</packaging>
 
-	<name>mysql daemon</name>
+	<name>LAO Daemon - MySQL</name>
 	<description>LAO - MySQL Daemon</description>
 
 	<parent>

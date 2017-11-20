@@ -1,6 +1,6 @@
 lao:
   version: latest
-  registry: gcr.io/lao-123456
+  registry: gcr.io/lao-logistics-123456
 spring:
   cloud:
     config:

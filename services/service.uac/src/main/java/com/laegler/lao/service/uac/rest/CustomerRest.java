@@ -1,10 +1,11 @@
 package com.laegler.lao.service.uac.rest;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-
+import com.laegler.lao.model.entity.Customer;
+import com.laegler.lao.service.uac.domain.CustomerService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.laegler.lao.model.entity.Customer;
-import com.laegler.lao.service.uac.domain.CustomerService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 @Api("Customer Service")
 @RestController
@@ -48,8 +45,9 @@ public class CustomerRest {
 
 	@PutMapping(value = "/customerId/{customerId:.+}", consumes = APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Update a Customer by Customer ID", response = Customer.class)
-	public ResponseEntity<?> updateCustomer(@PathVariable final long customerId, @RequestBody final Customer customer)
-			throws URISyntaxException {
+	public ResponseEntity<?> updateCustomer(
+			@PathVariable(name = "customerId") @ApiParam(name = "customerId", value = "Customer ID", example = "123") final long customerId,
+			@RequestBody @ApiParam(name = "customer", value = "Customer") final Customer customer) throws URISyntaxException {
 		LOG.trace("updateCustomer({})", customer);
 
 		customer.setCustomerId(customerId);
@@ -61,7 +59,8 @@ public class CustomerRest {
 
 	@DeleteMapping(value = "/customerId/{customerId:.+}")
 	@ApiOperation(value = "Delete a Customer by Customer ID")
-	public ResponseEntity<?> deleteCustomer(@PathVariable final long customerId) {
+	public ResponseEntity<?> deleteCustomer(
+			@PathVariable(name = "customerId") @ApiParam(name = "customerId", value = "Customer ID", example = "123") final long customerId) {
 		LOG.trace("deleteCustomer({})", customerId);
 
 		customerService.deleteCustomer(customerId);
@@ -69,9 +68,10 @@ public class CustomerRest {
 		return ResponseEntity.noContent().build();
 	}
 
-	@GetMapping("/id/{customerId:.+}")
+	@GetMapping("/customerId/{customerId:.+}")
 	@ApiOperation(value = "Get a Customer by Customer ID", response = Customer.class)
-	public ResponseEntity<?> getCustomerByCustomerId(@PathVariable(value = "Customer ID") final long customerId) {
+	public ResponseEntity<?> getCustomerByCustomerId(
+			@PathVariable(name = "customerId") @ApiParam(name = "customerId", value = "Customer ID", example = "123") final long customerId) {
 		LOG.trace("getCustomerByCustomerId({})", customerId);
 
 		return ResponseEntity.ok(customerService.getCustomerByCustomerId(customerId));
@@ -80,8 +80,10 @@ public class CustomerRest {
 	@GetMapping
 	@ApiOperation(value = "Get all Customers", response = Customer.class, responseContainer = "List")
 	public ResponseEntity<?> getAllCustomers(
-			@ApiParam(value = "Page number, starting from zero") @RequestParam(value = "page", required = false, defaultValue = "0") final int page,
-			@ApiParam(value = "Number of records per page") @RequestParam(value = "limit", required = false, defaultValue = "20") final int limit) {
+			@ApiParam(value = "Page number, starting from zero") @RequestParam(value = "page", required = false,
+					defaultValue = "0") final int page,
+			@ApiParam(value = "Number of records per page") @RequestParam(value = "limit", required = false,
+					defaultValue = "20") final int limit) {
 		LOG.trace("getAllCustomers()");
 
 		return ResponseEntity.ok(customerService.getAllCustomers(new PageRequest(page, limit)));

@@ -6,7 +6,7 @@
 	<artifactId>daemon.redis</artifactId>
 	<packaging>pom</packaging>
 
-	<name>redis-daemon</name>
+	<name>LAO Daemon - Redis</name>
 	<description>todo.</description>
 
 	<parent>

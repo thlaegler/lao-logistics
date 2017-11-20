@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>parent-service</name>
+	<name>LAO Parent - Service</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -41,20 +41,22 @@
 		<fabric8.maven.plugin.version>0.23.0</fabric8.maven.plugin.version>
 		<swagger.plugin.version>3.1.5</swagger.plugin.version>
 
-		<spring.cloud.config.uri>http://localhost:8888</spring.cloud.config.uri>
+		<spring.cloud.config.uri>http://daemon.config:8888</spring.cloud.config.uri>
 
 		<!-- Docker -->
-		<docker.registry>gcr.io/lao</docker.registry>
-		<dockerfile.skip>false</dockerfile.skip>
+		<docker.registry>gcr.io/lao-logistics</docker.registry>
 		<dockerfile.push.skip>true</dockerfile.push.skip>
 
 		<!-- Swagger -->
-		<codegen.skip>false</codegen.skip>
+		<api.port>8080</api.port>
 		<api.domain>no_be_set_in_submodule</api.domain>
 		<api.package>${project.groupId}.service.no_be_set_in_submodule</api.package>
 		<api.basebath>/no_be_set_in_submodule</api.basebath>
 
-		<jvm.args></jvm.args>
+		<jvm.args>-Dspring.profiles.active=default
+			-Dspring.cloud.config.git.uri=${spring.cloud.config.uri}
+			-Dspring.cloud.config.git.label=${spring.cloud.config.git.label}
+			-Dserver.port=${api.port}</jvm.args>
 	</properties>
 
 	<dependencyManagement>
@@ -159,7 +161,7 @@
 								</locations>
 								<swaggerFileName>${project.artifactId}</swaggerFileName>
 								<schemes>http,https</schemes>
-								<host>localhost</host>
+								<host>localhost:${api.port}</host>
 								<basePath>${api.basepath}</basePath>
 								<outputFormats>json,yaml</outputFormats>
 								<jsonExampleValues>false</jsonExampleValues>
@@ -205,8 +207,11 @@
 						<googleContainerRegistryEnabled>false</googleContainerRegistryEnabled>
 						<repository>${docker.registry}/${project.artifactId}</repository>
 						<!-- <tag>${project.version}</tag> -->
-						<!-- <buildArgs> <XMD_PLATFORM_CONFIG_GIT_BRANCH>${xmd.platform.config.git.branch}</XMD_PLATFORM_CONFIG_GIT_BRANCH> 
-							</buildArgs> -->
+						<buildArgs>
+							<SERVER_PORT>${api.port}</SERVER_PORT>
+							<SPRING_CLOUD_CONFIG_GIT_URI>${xmd.platform.config.git.uri}</SPRING_CLOUD_CONFIG_GIT_URI>
+							<SPRING_CLOUD_CONFIG_GIT_LABEL>${xmd.platform.config.git.label}</SPRING_CLOUD_CONFIG_GIT_LABEL>
+						</buildArgs>
 					</configuration>
 				</plugin>
 
@@ -264,11 +269,18 @@
 							</goals>
 							<configuration>
 								<language>java</language>
+								<library>feign</library>
+								<!-- <library>resttemplate</library> -->
+								<!-- <library>jersey2</library> -->
 								<inputSpec>${project.build.directory}/${project.artifactId}.yaml</inputSpec>
-								<output>${project.build.directory}/client.${api.domain}.java</output>
-								<apiPackage>${api.package}.handler</apiPackage>
-								<modelPackage>${api.package}.model</modelPackage>
-								<invokerPackage>${api.package}.invoker</invokerPackage>
+								<output>${project.basedir}/../../clients/client.${api.domain}</output>
+								<apiPackage>${project.groupId}.client.${api.domain}.api</apiPackage>
+								<modelPackage>${project.groupId}.client.${api.domain}.model</modelPackage>
+								<invokerPackage>${project.groupId}.client.${api.domain}.invoker</invokerPackage>
+								<configOptions>
+									<dateLibrary>java8</dateLibrary>
+									<serializableModel>true</serializableModel>
+								</configOptions>
 							</configuration>
 						</execution>
 						<execution>
@@ -280,10 +292,10 @@
 							<configuration>
 								<language>typescript-angular2</language>
 								<inputSpec>${project.build.directory}/${project.artifactId}.yaml</inputSpec>
-								<output>${project.build.directory}/client.${api.domain}.angular4</output>
-								<apiPackage>${api.package}.handler</apiPackage>
-								<modelPackage>${api.package}.model</modelPackage>
-								<invokerPackage>${api.package}.invoker</invokerPackage>
+								<output>${project.basedir}/../../frontends/frontend.angular4/src/app/client</output>
+								<apiPackage>${api.domain}.api</apiPackage>
+								<modelPackage>${api.domain}.model</modelPackage>
+								<invokerPackage>${api.domain}.invoker</invokerPackage>
 							</configuration>
 						</execution>
 						<execution>
@@ -296,9 +308,9 @@
 								<language>php</language>
 								<inputSpec>${project.build.directory}/${project.artifactId}.yaml</inputSpec>
 								<output>${project.build.directory}/client.${api.domain}.php</output>
-								<apiPackage>${api.package}.handler</apiPackage>
-								<modelPackage>${api.package}.model</modelPackage>
-								<invokerPackage>${api.package}.invoker</invokerPackage>
+								<apiPackage>${api.domain}.api</apiPackage>
+								<modelPackage>${api.domain}.model</modelPackage>
+								<invokerPackage>${api.domain}.invoker</invokerPackage>
 							</configuration>
 						</execution>
 					</executions>

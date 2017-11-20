@@ -5,6 +5,7 @@ import static javax.persistence.EnumType.STRING;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.laegler.lao.model.type.VehicleType;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,20 +33,25 @@ public class Vehicle extends ResourceSupport implements Serializable {
 
 	private static final long serialVersionUID = 7222760779815326475L;
 
+	@ApiModelProperty(example = "123", readOnly = true)
 	@Id
 	@GeneratedValue
 	private long vehicleId;
 
+	@ApiModelProperty(example = "200x200x200")
 	@Column
 	private String loadVolume;
 
+	@ApiModelProperty(example = "1")
 	@Column
 	private String loadWeight;
 
 	@Column
 	private String licencePlate;
 
+	@ApiModelProperty(example = "TRUCK")
 	@Enumerated(STRING)
+	@Column
 	private VehicleType vehicleType;
 
 	@OneToMany

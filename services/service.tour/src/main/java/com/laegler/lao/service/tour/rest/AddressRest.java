@@ -36,7 +36,7 @@ public class AddressRest {
 
 	@PostMapping(consumes = APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Add a new Address", response = Address.class)
-	public ResponseEntity<?> addAddress(@RequestBody final Address address) {
+	public ResponseEntity<?> addAddress(@RequestBody @ApiParam(name = "address", value = "Address") final Address address) {
 		LOG.trace("addAddress({})", address);
 
 		final Address addressResponse = addressService.addAddress(address);
@@ -49,7 +49,9 @@ public class AddressRest {
 
 	@PutMapping(value = "/addressId/{addressId:.+}", consumes = APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Update a Address by Address ID", response = Address.class)
-	public ResponseEntity<?> updateAddress(@PathVariable final long addressId, @RequestBody final Address address) {
+	public ResponseEntity<?> updateAddress(
+			@PathVariable(name = "addressId") @ApiParam(name = "addressId", value = "Address ID") final long addressId,
+			@RequestBody @ApiParam(name = "address", value = "Address") final Address address) {
 		LOG.trace("addAddress({})", address);
 
 		address.setAddressId(addressId);
@@ -63,7 +65,8 @@ public class AddressRest {
 
 	@DeleteMapping(value = "/addressId/{addressId:.+}")
 	@ApiOperation(value = "Delete a Address by Address ID")
-	public ResponseEntity<?> deleteAddress(@PathVariable final long addressId) {
+	public ResponseEntity<?> deleteAddress(
+			@PathVariable(name = "addressId") @ApiParam(name = "addressId", value = "Address ID") final long addressId) {
 		LOG.trace("deleteAddress({})", addressId);
 
 		addressService.deleteAddress(addressId);
@@ -73,7 +76,8 @@ public class AddressRest {
 
 	@GetMapping(value = "/addressId/{addressId:.+}")
 	@ApiOperation(value = "Get a Address by Address ID", response = Address.class)
-	public ResponseEntity<?> getAddressByAddressId(@PathVariable final long addressId) {
+	public ResponseEntity<?> getAddressByAddressId(
+			@PathVariable(name = "addressId") @ApiParam(name = "addressId", value = "Address ID") final long addressId) {
 		LOG.trace("getAddressByAddressId({})", addressId);
 
 		return ResponseEntity.ok(addressService.getAddressByAddressId(addressId));

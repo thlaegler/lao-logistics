@@ -5,7 +5,7 @@
 	<artifactId>lib.rest</artifactId>
 	<packaging>jar</packaging>
 
-	<name>rest-model-library</name>
+	<name>LAO Library - REST</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>

@@ -47,10 +47,10 @@ public class ShipmentService {
 		return shipmentJpaRepository.findByCustomer(customerId);
 	}
 
-	public Shipment getShipmentByTrackingUuid(UUID trackingUuid) {
-		LOG.trace("getShipmentByTrackingUuid({})", trackingUuid);
+	public Shipment getShipmentByTrackingNumber(UUID trackingNumber) {
+		LOG.trace("getShipmentByTrackingNumber({})", trackingNumber);
 
-		return shipmentJpaRepository.findFirstByTrackingUuid(trackingUuid);
+		return shipmentJpaRepository.findFirstByTrackingNumber(trackingNumber);
 	}
 
 	public Shipment getShipmentByShipmentId(final long shipmentId) {

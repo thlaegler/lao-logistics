@@ -6,7 +6,7 @@
 	<artifactId>daemon.eureka</artifactId>
 	<packaging>jar</packaging>
 
-	<name>eureka server daemon</name>
+	<name>LAO Daemon - Eureka</name>
 	<description>LAO - Eureka Daemon</description>
 
 	<parent>
@@ -16,6 +16,14 @@
 		<relativePath>../parents/parent.service</relativePath>
 	</parent>
 
+	<properties>
+		<api.port>8761</api.port>
+		<api.domain>eureka</api.domain>
+		<api.package>${project.groupId}.service.eureka</api.package>
+		<api.basebath>/tour</api.basebath>
+		<jvm.args>-Dspring.profiles.active=default -Dserver.port=${api.port}</jvm.args>
+	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

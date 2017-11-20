@@ -6,7 +6,7 @@
 	<artifactId>service.payment</artifactId>
 	<packaging>jar</packaging>
 
-	<name>payment service</name>
+	<name>LAO Service - Payment</name>
 	<description>LAO Payment Service</description>
 
 	<parent>
@@ -17,10 +17,15 @@
 	</parent>
 
 	<properties>
+		<api.port>8813</api.port>
 		<api.domain>payment</api.domain>
 		<api.package>${project.groupId}.service.payment</api.package>
 		<api.basebath>/payment</api.basebath>
-		<jvm.args>-Dspring.profiles.active=default -Dserver.port=8813</jvm.args>
+
+		<jvm.args>-Dspring.profiles.active=default
+			-Dspring.cloud.config.git.uri=${spring.cloud.config.uri}
+			-Dspring.cloud.config.git.label=${spring.cloud.config.git.label}
+			-Dserver.port=${api.port}</jvm.args>
 	</properties>
 
 	<dependencies>

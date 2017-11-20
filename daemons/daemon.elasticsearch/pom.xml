@@ -6,7 +6,7 @@
 	<artifactId>daemon.elasticsearch</artifactId>
 	<packaging>pom</packaging>
 
-	<name>elasticsearch daemon</name>
+	<name>LAO Daemon - Elasticsearch</name>
 	<description>LAO - Elasticsearch Daemon</description>
 
 	<parent>

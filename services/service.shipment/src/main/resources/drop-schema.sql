@@ -31,6 +31,7 @@ drop table if exists employee_tours
 drop table if exists facility
 drop table if exists facility_employees
 drop table if exists facility_vehicles
+drop table if exists id_generator
 drop table if exists payment
 drop table if exists shipment
 drop table if exists shipment_shipment_status

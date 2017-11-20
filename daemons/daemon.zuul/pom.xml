@@ -6,7 +6,7 @@
 	<artifactId>daemon.zuul</artifactId>
 	<packaging>jar</packaging>
 
-	<name>zuul api gateway daemon</name>
+	<name>LAO Daemon - Zuul</name>
 	<description>LAO - Zuul API Gateway Daemon</description>
 
 	<parent>

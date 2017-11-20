@@ -38,7 +38,8 @@ public class FacilityRest {
 
 	@PostMapping(consumes = APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Add a new Facility", response = Facility.class)
-	public ResponseEntity<?> addFacility(@RequestBody @ApiParam(value = "Facility") final Facility facility) throws URISyntaxException {
+	public ResponseEntity<?> addFacility(@RequestBody @ApiParam(name = "facility", value = "Facility") final Facility facility)
+			throws URISyntaxException {
 		LOG.trace("addFacility({})", facility);
 
 		Facility facilityResponse = facilityService.addFacility(facility);
@@ -51,8 +52,8 @@ public class FacilityRest {
 	@PutMapping(value = "/facilityId/{facilityId:.+}", consumes = APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Update a Facility by Facility ID", response = Facility.class)
 	public ResponseEntity<?> updateFacility(
-			@PathVariable(name = "facilityId") @ApiParam(value = "Facility ID", example = "1") final long facilityId,
-			@RequestBody @ApiParam(value = "Facility") final Facility facility) throws URISyntaxException {
+			@PathVariable(name = "facilityId") @ApiParam(name = "facilityId", value = "Facility ID", example = "1") final long facilityId,
+			@RequestBody @ApiParam(value = "Facility") final Facility facility) {
 		LOG.trace("updateFacility({})", facility);
 
 		facility.setFacilityId(facilityId);
@@ -67,7 +68,7 @@ public class FacilityRest {
 	@DeleteMapping(value = "/facilityId/{facilityId:.+}")
 	@ApiOperation(value = "Delete a Facility by Facility ID")
 	public ResponseEntity<?> deleteFacility(
-			@PathVariable(name = "facilityId") @ApiParam(value = "Facility ID", example = "1") final long facilityId) {
+			@PathVariable(name = "facilityId") @ApiParam(name = "facilityId", value = "Facility ID", example = "1") final long facilityId) {
 		LOG.trace("deleteFacility({})", facilityId);
 
 		facilityService.deleteFacility(facilityId);
@@ -78,7 +79,7 @@ public class FacilityRest {
 	@GetMapping("/facilityId/{facilityId:.+}")
 	@ApiOperation(value = "Get a Facility by Facility ID", response = Facility.class)
 	public ResponseEntity<?> getFacilityByFacilityId(
-			@PathVariable(name = "facilityId") @ApiParam(value = "Facility ID", example = "1") final long facilityId) {
+			@PathVariable(name = "facilityId") @ApiParam(name = "facilityId", value = "Facility ID", example = "1") final long facilityId) {
 		LOG.trace("getFacilityByFacilityId({})", facilityId);
 
 		Facility facility = facilityService.getFacilityByFacilityId(facilityId);
