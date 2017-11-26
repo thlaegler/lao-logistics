@@ -1,0 +1,53 @@
+steps:
+
+- name: gcr.io/cloud-builders/gcloud
+  id: 'preprocess'
+  args:
+  entrypoint: '/bin/bash'
+  args:
+  - '-c'
+  - |
+    source docs/cloudbuild.sh
+    stepPreprocess $_BUILD_TARGET $BRANCH_NAME $COMMIT_SHA
+
+- name: gcr.io/cloud-builders/mvn
+  id: 'maven'
+  waitFor: ['preprocess']
+  entrypoint: '/bin/bash'
+  args:
+  - '-c'
+  - |
+    source docs/cloudbuild.sh
+    stepMaven
+
+- name: gcr.io/cloud-builders/docker
+  id: 'docker'
+  waitFor: ['maven']
+  entrypoint: '/bin/bash'
+  args:
+  - '-c'
+  - |
+    source docs/cloudbuild.sh
+    stepDocker
+
+- name: gcr.io/$PROJECT_ID/helm
+  id: 'helm'
+  waitFor: ['docker']
+  entrypoint: '/bin/bash'
+  args:
+  - '-c'
+  - |
+    source docs/cloudbuild.sh
+    stepHelm
+
+- name: gcr.io/cloud-builders/gcloud
+  id: 'postprocess'
+  waitFor: ['helm']
+  entrypoint: '/bin/bash'
+  args:
+  - '-c'
+  - |
+    source docs/cloudbuild.sh
+    stepPostprocess
+
+timeout: 1200s

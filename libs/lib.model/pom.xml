@@ -12,7 +12,7 @@
 		<groupId>com.laegler.lao</groupId>
 		<artifactId>parent.libs</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../parents/parent.libs</relativePath>
+		<relativePath>../parents/parent.libs/pom.xml</relativePath>
 	</parent>
 
 	<dependencies>

@@ -1,14 +1,19 @@
 FROM openjdk:8-jdk-alpine
 
-LABEL image "gcr.io/lao-logistics/daemon.eureka"
+LABEL image "gcr.io/lao-logistics/daemon.oauth2"
 LABEL description "LAO - OAuth2 Daemon image"
 LABEL maintainer "Lao Logistics <info@example.org>"
 
-ARG SPRING_CLOUD_CONFIG_GIT_LABEL
+ARG SERVER_PORT=8080
+ARG SPRING_CLOUD_CONFIG_GIT_URI=http://daemon.config:8888
+ARG SPRING_CLOUD_CONFIG_GIT_LABEL=master
+
+ENV SERVER_PORT ${SERVER_PORT}
+ENV SPRING_CLOUD_CONFIG_GIT_URI ${SPRING_CLOUD_CONFIG_GIT_URI}
 ENV SPRING_CLOUD_CONFIG_GIT_LABEL ${SPRING_CLOUD_CONFIG_GIT_LABEL}
 
-EXPOSE 8801
+EXPOSE ${SERVER_PORT}
 
 ADD target/daemon.oauth2.jar /app.jar
 
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+ENTRYPOINT ["java", "-jar", "-Dserver.port=${SERVER_PORT}", "-Dspring.cloud.config.uri=${SPRING_CLOUD_CONFIG_GIT_URI}", "-Dspring.cloud.config.label=${SPRING_CLOUD_CONFIG_GIT_LABEL}","/app.jar"]

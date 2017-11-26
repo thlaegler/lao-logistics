@@ -13,7 +13,7 @@
 		<groupId>com.laegler.lao</groupId>
 		<artifactId>parent.service</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../parents/parent.service</relativePath>
+		<relativePath>../parents/parent.service/pom.xml</relativePath>
 	</parent>
 
 	<build>

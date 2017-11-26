@@ -12,11 +12,48 @@
 	<description>LAO Logistics</description>
 
 	<modules>
-		<module>parents</module>
-		<module>libs</module>
-		<module>daemons</module>
-		<module>services</module>
-		<module>clients</module>
+		<!-- <module>parents</module> -->
+		<module>parents/parent.service</module>
+		<module>parents/parent.libs</module>
+
+		<!-- <module>libs</module> -->
+		<module>libs/lib.model</module>
+		<module>libs/lib.rest</module>
+
+		<!-- <module>daemons</module> -->
+		<module>daemons/daemon.mysql</module>
+		<module>daemons/daemon.elasticsearch</module>
+		<module>daemons/daemon.redis</module>
+		<module>daemons/daemon.activiti</module>
+		<module>daemons/daemon.camunda</module>
+		<module>daemons/daemon.kafka</module>
+		<module>daemons/daemon.zookeeper</module>
+		<module>daemons/daemon.config</module>
+		<module>daemons/daemon.oauth2</module>
+		<module>daemons/daemon.zuul</module>
+		<module>daemons/daemon.eureka</module>
+
+		<!-- <module>services</module> -->
+		<module>services/service.uac</module>
+		<module>services/service.shipment</module>
+		<module>services/service.payment</module>
+		<module>services/service.tour</module>
+		<module>services/service.staff</module>
+		<module>services/service.workflow</module>
+
+		<!-- <module>clients</module> -->
+		<module>clients/client.uac</module>
+		<module>clients/client.shipment</module>
+		<module>clients/client.payment</module>
+		<module>clients/client.tour</module>
+		<module>clients/client.staff</module>
+
+		<!-- <module>frontends</module> -->
+		<module>frontends/frontend.angular4</module>
+		<module>frontends/frontend.react</module>
+		<module>frontends/frontend.spring-angular</module>
+		<!-- <module>frontends/frontend.android</module> -->
+
 	</modules>
 
 </project>
