@@ -1,8 +1,8 @@
 FROM elasticsearch:2.4.5
 
-LABEL image "gcr.io/example/example.elasticsearch:0.0.1-SNAPSHOT"
-LABEL description "example elasticsearch image"
-LABEL maintainer "John Doe <john.doe@example.org>"
+LABEL image "gcr.io/lao-logistics/daemon.elasticsearch:0.0.1-SNAPSHOT"
+LABEL description "LAO - Elasticsearch Daemon image"
+LABEL maintainer "Lao Logistics <info@example.org>"
 
 COPY logging.yaml /usr/share/elasticsearch/config/logging.yml
 COPY elasticsearch.yaml /usr/share/elasticsearch/config/elasticsearch.yml

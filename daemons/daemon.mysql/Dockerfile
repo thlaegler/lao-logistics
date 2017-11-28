@@ -1,8 +1,8 @@
 FROM mysql:5.7
 
-LABEL image "gcr.io/example/example.mysql:0.0.1-SNAPSHOT"
-LABEL description "example mysql image"
-LABEL maintainer "John Doe <john.doe@example.org>"
+LABEL image "gcr.io/lao-logistics/daemon.mysql:0.0.1-SNAPSHOT"
+LABEL description "LAO - MySQL Daemon image"
+LABEL maintainer "Lao Logistics <info@example.org>"
 
 ENV MYSQL_ROOT_PASSWORD=root
 ENV MYSQL_DATABASE=example

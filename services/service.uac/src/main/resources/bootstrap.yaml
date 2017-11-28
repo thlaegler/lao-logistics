@@ -1,6 +1,7 @@
 spring:
   application:
     name: @project.artifactId@
-#  cloud:
-#    config:
-#https://github.com/thlaegler/lao-logistics-config.git
+  cloud:
+    config:
+      uri: http://daemon.config:8888
+      label: master

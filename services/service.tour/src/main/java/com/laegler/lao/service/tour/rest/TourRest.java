@@ -1,7 +1,11 @@
 package com.laegler.lao.service.tour.rest;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
+import com.laegler.lao.model.entity.Tour;
+import com.laegler.lao.service.tour.domain.TourService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.laegler.lao.model.entity.Tour;
-import com.laegler.lao.service.tour.domain.TourService;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 
 @Api("Tours Service")
 @RestController
@@ -44,7 +41,8 @@ public class TourRest {
 
 	@PutMapping(value = "/tourId/{tourId:.+}", consumes = APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Update a Tour by Tour ID", response = Tour.class)
-	public ResponseEntity<?> updateTour(@PathVariable final long tourId, @RequestBody final Tour tour) {
+	public ResponseEntity<?> updateTour(@PathVariable(name = "tourId") @ApiParam(name = "tourId", value = "Tour ID") final long tourId,
+			@RequestBody final Tour tour) {
 		LOG.trace("addTour({})", tour);
 
 		tour.setTourId(tourId);
@@ -54,7 +52,7 @@ public class TourRest {
 
 	@DeleteMapping(value = "/tourId/{tourId:.+}")
 	@ApiOperation(value = "Delete a Tour by Tour ID")
-	public ResponseEntity<?> deleteTour(@PathVariable final long tourId) {
+	public ResponseEntity<?> deleteTour(@PathVariable(name = "tourId") @ApiParam(name = "tourId", value = "Tour ID") final long tourId) {
 		LOG.trace("deleteTour({})", tourId);
 
 		tourService.deleteTour(tourId);
@@ -65,24 +63,27 @@ public class TourRest {
 	@GetMapping("/current")
 	@ApiOperation(value = "Get current Tours", response = Tour.class, responseContainer = "Page")
 	public ResponseEntity<?> getCurrentTours(
-			@ApiParam(value = "Page number, starting from zero") @RequestParam(value = "page", required = false, defaultValue = "0") final Integer page,
-			@ApiParam(value = "Number of records per page") @RequestParam(value = "limit", required = false, defaultValue = "20") final Integer limit) {
+			@ApiParam(value = "Page number, starting from zero") @RequestParam(value = "page", required = false,
+					defaultValue = "0") final Integer page,
+			@ApiParam(value = "Number of records per page") @RequestParam(value = "limit", required = false,
+					defaultValue = "20") final Integer limit) {
 		LOG.debug("getCurrentTours() called");
 
 		return ResponseEntity.ok(tourService.getCurrentTours(new PageRequest(page, limit)));
 	}
 
-	@GetMapping("/current/{driverId:.+}")
+	@GetMapping("/current/driverId/{driverId:.+}")
 	@ApiOperation(value = "Get current Tour By Driver ID", response = Tour.class)
-	public ResponseEntity<?> getCurrentTourByDriverId(@PathVariable(value = "Driver ID") final long driverId) {
+	public ResponseEntity<?> getCurrentTourByDriverId(
+			@PathVariable(name = "driverId") @ApiParam(name = "driverId", value = "Driver ID") final long driverId) {
 		LOG.trace("getCurrentTourByDriverId({})", driverId);
 
 		return ResponseEntity.ok(tourService.getCurrentTourByDriverId(driverId));
 	}
 
-	@GetMapping("/id/{tourId:.+}")
+	@GetMapping("/tourId/{tourId:.+}")
 	@ApiOperation(value = "Get a Tour by Tour ID", response = Tour.class, responseContainer = "Page")
-	public ResponseEntity<?> getTourByTourId(@PathVariable(value = "Tour ID") final long tourId) {
+	public ResponseEntity<?> getTourByTourId(@PathVariable(name = "tourId") @ApiParam(name = "tourId", value = "Tour ID") final long tourId) {
 		LOG.trace("getTourByTourId({})", tourId);
 
 		return ResponseEntity.ok(tourService.getTourByTourId(tourId));
@@ -91,8 +92,10 @@ public class TourRest {
 	@GetMapping
 	@ApiOperation(value = "Get all Tours", response = Tour.class, responseContainer = "Page")
 	public ResponseEntity<?> getAllTours(
-			@ApiParam(value = "Page number, starting from zero") @RequestParam(value = "page", required = false, defaultValue = "0") final Integer page,
-			@ApiParam(value = "Number of records per page") @RequestParam(value = "limit", required = false, defaultValue = "20") final Integer limit) {
+			@ApiParam(value = "Page number, starting from zero") @RequestParam(value = "page", required = false,
+					defaultValue = "0") final Integer page,
+			@ApiParam(value = "Number of records per page") @RequestParam(value = "limit", required = false,
+					defaultValue = "20") final Integer limit) {
 		LOG.debug("getAllTours() called");
 
 		return ResponseEntity.ok(tourService.getAllTours(new PageRequest(page, limit)));

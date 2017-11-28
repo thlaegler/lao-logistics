@@ -1,0 +1,16 @@
+apiVersion: v1
+name: lao-chart
+version: '0.0.1'
+icon: http://example.org/logo.png
+home: https://github.org/thlaegler/lao-logistics
+source:
+- http://www.example.org
+description: lao logistics api
+maintainers:
+- name: lao
+  email: lao@example.org
+keywords:
+- backend
+- api
+- rest
+- web

@@ -1,0 +1,164 @@
+version: '3'
+services:
+  service.tour:
+    image: gcr.io/lao-logistics/service.tour
+    container_name: service.tour
+    hostname: service.tour
+    command: java -Dspring.active.profiles=test -jar app.jar
+    ports:
+    - 8814:8080
+    environment:
+    - TEST_HOST="http://service.tour:8080"
+    links:
+    - daemon.oauth2
+    - daemon.zuul
+    - daemon.eureka
+    - daemon.config
+    - daemon.mysql
+    - daemon.redis
+    - daemon.elasticsearch
+    networks:
+    - lao
+  service.shipment:
+    image: gcr.io/lao-logistics/service.shipment
+    container_name: service.shipment
+    hostname: service.shipment
+    command: java -Dspring.active.profiles=test -jar app.jar
+    ports:
+    - 8813:8080
+    environment:
+    - TEST_HOST="http://service.shipment:8080"
+    links:
+    - daemon.oauth2
+    - daemon.zuul
+    - daemon.eureka
+    - daemon.config
+    - daemon.mysql
+    networks:
+    - lao
+  service.payment:
+    image: gcr.io/lao-logistics/service.payment
+    container_name: service.payment
+    hostname: service.payment
+    command: java -Dspring.active.profiles=test -jar app.jar
+    ports:
+    - 8812:8080
+    environment:
+    - TEST_HOST="http://service.payment:8080"
+    links:
+    - daemon.oauth2
+    - daemon.zuul
+    - daemon.eureka
+    - daemon.config
+    - daemon.mysql
+    networks:
+    - lao
+  service.uac:
+    image: gcr.io/lao-logistics/service.uac
+    container_name: service.uac
+    hostname: service.uac
+    command: java -Dspring.active.profiles=test -jar app.jar
+    ports:
+    - 8811:8080
+    environment:
+    - TEST_HOST="http://service.uac:8080"
+    links:
+    - daemon.oauth2
+    - daemon.zuul
+    - daemon.eureka
+    - daemon.config
+    - daemon.mysql
+    - daemon.redis
+    - daemon.elasticsearch
+    networks:
+    - lao
+  daemon.oauth2:
+    image: gcr.io/lao-logistics/daemon.oauth2
+    container_name: daemon.oauth2
+    hostname: daemon.oauth2
+    command: java -Dspring.active.profiles=test -jar app.jar
+    ports:
+    - 8801:8801
+    environment:
+    - TEST_HOST="http://daemon.oauth2:8801"
+    links:
+    - daemon.zuul
+    - daemon.eureka
+    - daemon.config
+    - daemon.mysql
+    networks:
+    - lao
+  daemon.zuul:
+    image: gcr.io/lao-logistics/daemon.zuul
+    container_name: daemon.zuul
+    hostname: daemon.zuul
+    command: java -Dspring.active.profiles=test -jar app.jar
+    ports:
+    - 8080:8080
+    environment:
+    - TEST_HOST="http://daemon.zuul:8080"
+    links:
+    - daemon.eureka
+    - daemon.config
+    networks:
+    - lao
+  daemon.eureka:
+    image: gcr.io/lao-logistics/daemon.eureka
+    container_name: daemon.eureka
+    hostname: daemon.eureka
+    command: java -Dspring.active.profiles=test -jar app.jar
+    ports:
+    - 8761:8761
+    environment:
+    - TEST_HOST="http://daemon.eureka:8080"
+    links:
+    - daemon.config
+    networks:
+    - lao
+  daemon.config:
+    image: gcr.io/lao-logistics/daemon.config
+    container_name: daemon.config
+    hostname: daemon.config
+    command: java -Dspring.active.profiles=test -jar app.jar
+    ports:
+    - 8888:8888
+    environment:
+    - TEST_HOST="http://daemon.config:8080"
+    networks:
+    - lao
+  daemon.mysql:
+    image: gcr.io/lao-logistics/daemon.mysql
+    container_name: daemon.mysql
+    hostname: daemon.mysql
+    ports:
+    - 3306:3306
+    networks:
+    - lao
+  daemon.redis:
+    image: gcr.io/lao-logistics/daemon.redis
+    container_name: daemon.redis
+    hostname: daemon.redis
+    ports:
+    - 6379:6379
+    networks:
+    - lao
+  daemon.elasticsearch:
+    image: gcr.io/lao-logistics/daemon.elasticsearch
+    container_name: daemon.elasticsearch
+    hostname: daemon.elasticsearch
+    ports:
+    - 9200:9200
+    - 9300:9300
+    environment:
+    - cluster.name=elasticsearch.cluster
+    - bootstrap.memory_lock=true
+    - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+    - esdata:/usr/share/elasticsearch/data
+    networks:
+    - lao
+volumes:
+  esdata:
+    driver: local
+networks:
+  lao: null

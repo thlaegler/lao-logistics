@@ -1,0 +1,15 @@
+lao:
+  version: latest
+  registry: gcr.io/lao-logistics-123456
+spring:
+  cloud:
+    config:
+      git:
+        uri: https://bitbucket.org/tlaegler/lao-logistics-config.git
+        username: <change_me>
+        password: <change_me>
+        label: master
+upgrade:
+  revisionHistoryLimit: 1
+  minReadySeconds: 120
+  maxUnavailable: 0

@@ -65,4 +65,4 @@ dist/
 nbdist/
 .nb-gradle/
 
-
+.DS_Stores

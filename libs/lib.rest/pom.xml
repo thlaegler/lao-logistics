@@ -5,14 +5,14 @@
 	<artifactId>lib.rest</artifactId>
 	<packaging>jar</packaging>
 
-	<name>rest-model-library</name>
+	<name>LAO Library - REST</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
 		<groupId>com.laegler.lao</groupId>
 		<artifactId>parent.libs</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../parents/parent.libs</relativePath>
+		<relativePath>../parents/parent.libs/pom.xml</relativePath>
 	</parent>
 
 	<properties>

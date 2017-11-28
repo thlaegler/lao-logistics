@@ -57,7 +57,7 @@ spring:
     show-sql: true
     generate-ddl: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
       naming:
         strategy: org.hibernate.cfg.ImprovedNamingStrategy
     properties:
@@ -73,3 +73,6 @@ spring:
               action: drop-and-create
               create-target: src/main/resources/create-schema.sql
               drop-target: src/main/resources/drop-schema.sql
+  messages:
+    basename: messages/messages
+    encoding: UTF-8

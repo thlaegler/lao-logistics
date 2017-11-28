@@ -11,7 +11,7 @@ import com.laegler.lao.model.entity.Shipment;
 @Repository
 public interface ShipmentJpaRepository extends JpaRepository<Shipment, Long> {
 
-	Shipment findFirstByTrackingUuid(final UUID trackingUuid);
+	Shipment findFirstByTrackingNumber(final UUID trackingNumber);
 
 	List<Shipment> findByCustomer(long customerId);
 

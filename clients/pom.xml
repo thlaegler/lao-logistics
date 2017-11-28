@@ -8,14 +8,15 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>clients</name>
-	<description>Demo project for Spring Boot</description>
+	<name>LAO Clients</name>
+	<description>LAO - Aggregator Project of Java REST clients</description>
 
 	<modules>
-		<module>client.angular4</module>
-		<module>client.react</module>
-		<module>client.spring-angular</module>
-		<!-- <module>client.android</module> -->
+		<module>client.uac</module>
+		<module>client.shipment</module>
+		<module>client.payment</module>
+		<module>client.tour</module>
+		<module>client.staff</module>
 	</modules>
 
 </project>

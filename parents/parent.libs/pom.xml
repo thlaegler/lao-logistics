@@ -8,9 +8,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>parent library</name>
+	<name>LAO Parent - Library</name>
 	<description>LAO - Library Parent</description>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -25,6 +25,9 @@
 		<springfox.version>2.7.0</springfox.version>
 		<hibernate.version>5.0.12.Final</hibernate.version>
 		<hibernate.jpa.version>1.0.0.Final</hibernate.jpa.version>
+		<jackson.version>2.8.10</jackson.version>
+		<gson.version>2.8.2</gson.version>
+		<feign.version>9.5.1</feign.version>
 		<lombok.version>1.16.18</lombok.version>
 		<swagger.version>1.5.16</swagger.version>
 	</properties>
@@ -39,6 +42,16 @@
 				<scope>import</scope>
 			</dependency>
 
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-web</artifactId>
+				<version>${spring.boot.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-data-jpa</artifactId>
+				<version>${spring.boot.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-hateoas</artifactId>

@@ -1,3 +1,7 @@
 spring:
   application:
     name: @project.artifactId@
+  cloud:
+    config:
+      uri: @spring.cloud.config.git.uri@
+      label: @spring.cloud.config.git.label@

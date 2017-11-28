@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>services aggregator</name>
+	<name>LAO Services</name>
 	<description>LAO - Services Aggregator</description>
 
 	<modules>
@@ -17,6 +17,7 @@
 		<module>service.payment</module>
 		<module>service.tour</module>
 		<module>service.staff</module>
+		<module>service.workflow</module>
 	</modules>
 
 </project>

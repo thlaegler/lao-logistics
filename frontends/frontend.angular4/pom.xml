@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>frontend.angular4</artifactId>
+	<groupId>com.laegler.lao</groupId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>LAO Frontend - Angular4</name>
+	<description>LAO - Angular4 Frontend</description>
+
+	<build>
+		<plugins>
+			<!-- <plugin> <groupId>io.wcm.maven.plugins</groupId> <artifactId>nodejs-maven-plugin</artifactId> 
+				<executions> <execution> <phase>compile</phase> <goals> <goal>run</goal> 
+				</goals> </execution> </executions> <configuration> <npmVersion>1.4.9</npmVersion> 
+				<nodeJsVersion>0.10.32</nodeJsVersion> <nodeJsDirectory>/tmp/nodejs</nodeJsDirectory> 
+				<tasks> <npmInstallTask> <workingDirectory>${project.build.directory}</workingDirectory> 
+				</npmInstallTask> <nodeJsTask> <workingDirectory>${project.basedir}/src/test/javascript/</workingDirectory> 
+				<moduleName>karma</moduleName> <moduleVersion>1.0.0</moduleVersion> <arguments> 
+				<argument>start</argument> </arguments> </nodeJsTask> </tasks> </configuration> 
+				</plugin> -->
+		</plugins>
+	</build>
+</project>
