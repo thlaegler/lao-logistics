@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ import java.util.UUID;
 
 @Api("Shipment Service")
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(value = "/shipments", produces = APPLICATION_JSON_VALUE)
 public class ShipmentRest {
 
@@ -51,14 +53,14 @@ public class ShipmentRest {
 		s.add(getSelfLink(s.getShipmentId()).withSelfRel());
 		s.add(getListLink().withRel("list"));
 
-		return ResponseEntity.created(getSelfLink(s.getShipmentId()).toUri()).body(s);
+		return ResponseEntity.created(getSelfLink(s.getShipmentId()).toUri()).header("Access-Control-Allow-Origin", "*").body(s);
 	}
 
 	@PutMapping(value = "/shipmentId/{shipmentId:.+}", consumes = APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Update a Shipment by Shipment ID", response = Shipment.class)
 	public ResponseEntity<?> updateShipment(
 			@NotNull @PathVariable(name = "shipmentId") @ApiParam(name = "shipmentId", value = "Shipment ID",
-					example = "1") final long shipmentId,
+					example = "123") final long shipmentId,
 			@Valid @RequestBody @ApiParam(value = "Shipment") final Shipment shipment) throws URISyntaxException {
 		LOG.trace("updateShipment({})", shipment);
 
@@ -68,13 +70,13 @@ public class ShipmentRest {
 		s.add(getSelfLink(s.getShipmentId()).withSelfRel());
 		s.add(getListLink().withRel("list"));
 
-		return ResponseEntity.ok(s);
+		return ResponseEntity.ok().header("Access-Control-Allow-Origin", "*").body(s);
 	}
 
 	@DeleteMapping(value = "/shipmentId/{shipmentId:.+}")
 	@ApiOperation(value = "Delete a Shipment by Shipment ID")
 	public ResponseEntity<?> deleteShipment(@NotNull @PathVariable(name = "shipmentId") @ApiParam(name = "shipmentId", value = "Shipment ID",
-			example = "1") final long shipmentId) {
+			example = "123") final long shipmentId) {
 		LOG.trace("deleteShipment({})", shipmentId);
 
 		shipmentService.deleteShipment(shipmentId);
@@ -93,14 +95,14 @@ public class ShipmentRest {
 		s.add(getSelfLink(s.getShipmentId()).withSelfRel());
 		s.add(getListLink().withRel("list"));
 
-		return ResponseEntity.ok(s);
+		return ResponseEntity.ok().header("Access-Control-Allow-Origin", "*").body(s);
 		// shipmentService.getShipmentByTrackingNumber(trackingNumber));
 	}
 
 	@GetMapping("/customerId/{customerId:.+}")
 	@ApiOperation(value = "Get a Shipment by Customer ID", response = Shipment.class, responseContainer = "List")
 	public ResponseEntity<?> getShipmentsByCustomerId(@NotNull @PathVariable(value = "customerId") @ApiParam(name = "customerId",
-			value = "Customer ID", example = "1") final long customerId) {
+			value = "Customer ID", example = "123") final long customerId) {
 		LOG.trace("getShipmentsByCustomerId({})", customerId);
 
 		List<Shipment> shipments = shipmentService.getShipmentsByCustomerId(customerId);
@@ -111,13 +113,13 @@ public class ShipmentRest {
 
 		Resources<Shipment> responseResources = new Resources<>(shipments, getListLink().withRel("list"));
 
-		return ResponseEntity.ok(responseResources);
+		return ResponseEntity.ok().header("Access-Control-Allow-Origin", "*").body(responseResources);
 	}
 
 	@GetMapping("/shipmentId/{shipmentId:.+}")
 	@ApiOperation(value = "Get a Shipment by Shipment ID", response = Shipment.class)
 	public ResponseEntity<?> getShipmentByShipmentId(@NotNull @PathVariable(name = "shipmentId") @ApiParam(name = "shipmentId",
-			value = "Shipment ID", example = "1") final long shipmentId) {
+			value = "Shipment ID", example = "123") final long shipmentId) {
 		LOG.trace("getShipmentByShipmentId({})", shipmentId);
 
 		Shipment s = shipmentService.getShipmentByShipmentId(shipmentId);
@@ -125,7 +127,7 @@ public class ShipmentRest {
 		s.add(getSelfLink(s.getShipmentId()).withSelfRel());
 		s.add(getListLink().withRel("list"));
 
-		return ResponseEntity.ok(s);
+		return ResponseEntity.ok().header("Access-Control-Allow-Origin", "*").body(s);
 	}
 
 	@GetMapping

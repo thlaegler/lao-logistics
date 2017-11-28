@@ -55,7 +55,7 @@ public class Shipment extends ResourceSupport implements Serializable {
 	@Column
 	private String dimensions;
 
-	@ApiModelProperty(example = "20x20x30")
+	@ApiModelProperty(example = "20kg")
 	@Column
 	private String weight;
 
