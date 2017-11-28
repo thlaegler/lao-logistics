@@ -41,7 +41,8 @@
 		<fabric8.maven.plugin.version>0.23.0</fabric8.maven.plugin.version>
 		<swagger.plugin.version>3.1.5</swagger.plugin.version>
 
-		<spring.cloud.config.uri>http://daemon.config:8888</spring.cloud.config.uri>
+		<spring.cloud.config.git.uri>http://daemon.config:8888</spring.cloud.config.git.uri>
+		<spring.cloud.config.git.label>master</spring.cloud.config.git.label>
 
 		<!-- Docker -->
 		<docker.registry>gcr.io/lao-logistics</docker.registry>
@@ -54,7 +55,7 @@
 		<api.basebath>/no_be_set_in_submodule</api.basebath>
 
 		<jvm.args>-Dspring.profiles.active=default
-			-Dspring.cloud.config.git.uri=${spring.cloud.config.uri}
+			-Dspring.cloud.config.git.uri=${spring.cloud.config.git.uri}
 			-Dspring.cloud.config.git.label=${spring.cloud.config.git.label}
 			-Dserver.port=${api.port}</jvm.args>
 	</properties>
@@ -292,7 +293,7 @@
 							<configuration>
 								<language>typescript-angular2</language>
 								<inputSpec>${project.build.directory}/${project.artifactId}.yaml</inputSpec>
-								<output>${project.basedir}/../../frontends/frontend.angular4/src/app/client</output>
+								<output>${project.basedir}/../../frontends/frontend.angular4/src/app</output>
 								<apiPackage>${api.domain}.api</apiPackage>
 								<modelPackage>${api.domain}.model</modelPackage>
 								<invokerPackage>${api.domain}.invoker</invokerPackage>
@@ -387,20 +388,27 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
-
-		<plugins>
-			<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>dockerfile-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>io.fabric8</groupId>
-				<artifactId>fabric8-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
 	</build>
 
 	<profiles>
+		<profile>
+			<id>docker</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.spotify</groupId>
+						<artifactId>dockerfile-maven-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>io.fabric8</groupId>
+						<artifactId>fabric8-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 		<profile>
 			<id>docu</id>
 			<activation>

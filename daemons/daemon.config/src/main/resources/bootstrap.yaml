@@ -3,6 +3,8 @@ spring:
     name: @project.artifactId@
   cloud:
     config:
-      uri: https://github.com/thlaegler/lao-logistics-config.git
-      username: apikey
-      password: apikey
+      server:
+        git:
+          uri: https://github.com/thlaegler/lao-logistics-config.git
+          username: changeme
+          password: changeme

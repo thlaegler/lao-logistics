@@ -143,7 +143,7 @@ public class ShipmentRest {
 		// new Resources<>(shipments.getContent(),
 		// linkTo(methodOn(ShipmentRest.class).getAllShipments(page, size)).withRel("list"));
 
-		return ResponseEntity.ok(shipments.getContent());
+		return ResponseEntity.ok().header("Access-Control-Allow-Origin", "*").body(shipments.getContent());
 	}
 
 	private ControllerLinkBuilder getSelfLink(final long shipmentId) {

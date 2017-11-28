@@ -23,7 +23,7 @@
 		<api.basebath>/shipment</api.basebath>
 
 		<jvm.args>-Dspring.profiles.active=default
-			-Dspring.cloud.config.git.uri=${spring.cloud.config.uri}
+			-Dspring.cloud.config.git.uri=${spring.cloud.config.git.uri}
 			-Dspring.cloud.config.git.label=${spring.cloud.config.git.label}
 			-Dserver.port=${api.port}</jvm.args>
 	</properties>

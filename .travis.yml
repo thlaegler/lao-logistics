@@ -1,0 +1,15 @@
+language: java
+sudo: false # faster builds
+jdk:
+- oraclejdk8
+#script: "./mvnw install cobertura:cobertura -DskipTests=true -Dmaven.javadoc.skip=true -B -V"
+before_install:
+- mvn -N io.takari:maven:wrapper
+- chmod +x mvnw
+install:
+- ./mvnw install -f code2model-example/example.parents/pom.xml
+- ./mvnw install -DskipTests -DskipDocker -Dmaven.javadoc.skip=true -q -B -V
+#script:
+#- ./mvnw test cobertura:cobertura -q
+after_success:
+- bash <(curl -s https://codecov.io/bash)

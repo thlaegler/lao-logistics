@@ -1,0 +1,11 @@
+wwwroot/*.js
+node_modules
+typings
+dist
+VERSION
+git_push.sh
+uac
+tour
+shipment
+staff
+payment

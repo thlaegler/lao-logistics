@@ -1,7 +1,10 @@
 package com.laegler.lao.service.payment.rest;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
+import com.laegler.lao.model.entity.Payment;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -9,11 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.laegler.lao.model.entity.Payment;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
 @Api("Payment Service")
 @RestController
@@ -67,7 +65,8 @@ public class PaymentRest {
 
 	@GetMapping("/id/{paymentId:.+}")
 	@ApiOperation(value = "Get a Payment by Payment ID", response = Payment.class, responseContainer = "Page")
-	public ResponseEntity<?> getPaymentById(@PathVariable(value = "Payment ID") final long paymentId) {
+	public ResponseEntity<?> getPaymentById(
+			@PathVariable(value = "Payment ID") @ApiParam(name = "paymentId", value = "Payment ID") final long paymentId) {
 		LOG.trace("getPaymentById({})", paymentId);
 
 		return ResponseEntity.ok().build();

@@ -15,6 +15,19 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../services/parent.service</relativePath>
 	</parent>
+	
+	<properties>
+		<api.port>8888</api.port>
+		<spring.cloud.config.server.git.uri>https://bitbucket.org/tlaegler/lao-config.git</spring.cloud.config.server.git.uri>
+		<spring.cloud.config.server.git.username>changeme</spring.cloud.config.server.git.username>
+		<spring.cloud.config.server.git.password>changeme</spring.cloud.config.server.git.password>
+
+		<jvm.args>-Dspring.profiles.active=default
+			-Dspring.cloud.config.server.git.uri=${spring.cloud.config.server.git.uri}
+			-Dspring.cloud.config.server.git.username=${spring.cloud.config.server.git.username}
+			-Dspring.cloud.config.server.git.password=${spring.cloud.config.server.git.password}
+			-Dserver.port=${api.port}</jvm.args>
+	</properties>
 
 	<dependencies>
 		<!-- Spring Boot -->

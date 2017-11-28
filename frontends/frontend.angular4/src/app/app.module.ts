@@ -1,33 +1,39 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { QrScannerModule } from 'angular2-qrscanner';
-// import { barcodeScanner } from 'angular-barcode-scanner';
-import { LOCALE_ID, NgModule } from '@angular/core';
-import { registerLocaleData } from '@angular/common';
-import localeEn from '@angular/common/locales/en';
-import localeFr from '@angular/common/locales/fr';
-import localeDe from '@angular/common/locales/de';
-//import localeLa from '@angular/common/locales/la*';
+
+import { MaterializeModule } from 'angular2-materialize';
 
 import { AppComponent } from './app.component';
-
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { HomeComponent } from './home/home.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { routing } from './app.routing';
+import { usersRouting } from "./users/users.routing";
+import { UsersModule } from "./users/users.module";
+import { shipmentRouting } from "./shipment/shipment.routing";
+import { ShipmentModule } from "./shipment/shipment.module";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavBarComponent,
+    HomeComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule, 
-    AppRoutingModule,
-    QrScannerModule
-    // barcodeScanner
+    HttpModule,
+    MaterializeModule,
+    UsersModule,
+    usersRouting,
+    ShipmentModule,
+    shipmentRouting,
+    routing
   ],
-  providers: [{provide: LOCALE_ID, useValue: 'en'}],
+  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-  //registerLocaleData(localeEn, localeFr, localeDe);
- }
+export class AppModule { }

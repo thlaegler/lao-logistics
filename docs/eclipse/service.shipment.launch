@@ -15,7 +15,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.laegler.lao.service.shipment.ShipmentApplication"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="service.shipment"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.springframework.ide.eclipse.boot.launch.BootMavenSourcePathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=default -Dserver.port=8812"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=default -Dserver.port=8812 -Dspring.cloud.config.git.uri=http://daemon.config:8888 -Dspring.cloud.config.git.label=master"/>
 <stringAttribute key="process_factory_id" value="org.springframework.ide.eclipse.boot.launch.process.BootProcessFactory"/>
 <booleanAttribute key="spring.boot.ansi.console" value="true"/>
 <booleanAttribute key="spring.boot.dash.hidden" value="false"/>
